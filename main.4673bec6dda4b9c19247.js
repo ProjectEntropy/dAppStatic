@@ -34139,7 +34139,7 @@ var App = function (_React$Component) {
     _this.web3.setProvider(provider);
     _this.meta = (0, _truffleContract2.default)(_Entropy2.default);
     _this.meta.setProvider(provider);
-    _this.meta.deployed().then(function (instance) {
+    _this.meta.at("0x511b3f037be295ccb60efe956878305b138fa5a4").then(function (instance) {
       _this.state.ethAddress = instance.address;
       _this.state.contract = instance;
       _this.state.web3 = _this.web3;
