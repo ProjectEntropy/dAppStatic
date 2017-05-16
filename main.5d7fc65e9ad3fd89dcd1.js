@@ -34133,12 +34133,17 @@ var App = function (_React$Component) {
     _this.ethAddress = "";
 
     // Load Ethereum jazz;
-    var provider = new _web2.default.providers.HttpProvider('http://' + TESTRPC_HOST + ':' + TESTRPC_PORT);
+    if (typeof web3 !== 'undefined') {
+      // Use Mist/MetaMask's provider
+      _this.web3 = new _web2.default(web3.currentProvider);
+    } else {
+      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+      _this.web3 = new _web2.default(new _web2.default.providers.HttpProvider('http://' + TESTRPC_HOST + ':' + TESTRPC_PORT));
+    }
 
-    _this.web3 = new _web2.default();
-    _this.web3.setProvider(provider);
     _this.meta = (0, _truffleContract2.default)(_Entropy2.default);
-    _this.meta.setProvider(provider);
+    _this.meta.setProvider(web3.currentProvider);
+
     _this.meta.at("0x511b3f037be295ccb60efe956878305b138fa5a4").then(function (instance) {
       _this.state.ethAddress = instance.address;
       _this.state.contract = instance;
